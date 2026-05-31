@@ -1,0 +1,180 @@
+name: capitol-analytics-architekturen-training
+
+services:
+
+  # ─── Python-Werkbank fuer Uebung 1 (Datenarchaeologie) ───────────
+  # Aufruf:  docker compose run --rm python <befehl>
+  python:
+    build:
+      context: ./python
+    image: capitol-python
+    container_name: capitol-python
+    working_dir: /work
+    volumes:
+      - ./seed-data:/seed-data
+      - ./scripts:/work
+    profiles:
+      - tools
+    restart: "no"
+
+  # ─── Uebung 6: OSS-Mini-Lakehouse ────────────────────────────────
+  # Storage-Layer: MinIO (S3-kompatibel)
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: capitol-minio-storage
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: capitol
+      MINIO_ROOT_PASSWORD: capitolcapitol
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - minio_data:/data
+
+  # Warehouse-Bucket fuer das Iceberg-Lakehouse anlegen
+  minio-init:
+    image: quay.io/minio/mc:latest
+    container_name: capitol-minio-storage-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        mc alias set local http://minio:9000 capitol capitolcapitol
+        mc mb -p local/capitol-warehouse
+        echo "MinIO Bucket 'capitol-warehouse' bereit."
+    restart: "no"
+
+  # Catalog-Layer: Metadaten-Postgres fuer Lakekeeper
+  lakekeeper-db:
+    image: postgres:17
+    container_name: capitol-lakekeeper-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lakekeeper
+      POSTGRES_PASSWORD: lakekeeper
+      POSTGRES_DB: lakekeeper
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lakekeeper -d lakekeeper"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - lakekeeper_db_data:/var/lib/postgresql/data
+
+  # Catalog-Layer: Lakekeeper-Schema migrieren (einmalig)
+  lakekeeper-migrate:
+    image: quay.io/lakekeeper/catalog:latest-main
+    container_name: capitol-lakekeeper-migrate
+    restart: "no"
+    command: ["migrate"]
+    environment:
+      LAKEKEEPER__PG_ENCRYPTION_KEY: capitol-training-not-secret
+      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
+      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
+      RUST_LOG: info
+    depends_on:
+      lakekeeper-db:
+        condition: service_healthy
+
+  # Catalog-Layer: Lakekeeper (Iceberg REST Catalog)
+  lakekeeper:
+    image: quay.io/lakekeeper/catalog:latest-main
+    container_name: capitol-lakekeeper
+    restart: unless-stopped
+    command: ["serve"]
+    environment:
+      LAKEKEEPER__PG_ENCRYPTION_KEY: capitol-training-not-secret
+      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
+      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
+      LAKEKEEPER__ENABLE_DEFAULT_PROJECT: "true"
+      RUST_LOG: info
+    ports:
+      - "8181:8181"
+    healthcheck:
+      test: ["CMD", "/home/nonroot/lakekeeper", "healthcheck"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    depends_on:
+      lakekeeper-migrate:
+        condition: service_completed_successfully
+      lakekeeper-db:
+        condition: service_healthy
+
+  # Catalog-Layer: Lakekeeper einmalig bootstrappen (Terms akzeptieren,
+  # Default-Projekt anlegen). Das Warehouse legen die Teilnehmenden in
+  # Phase 1 der Uebung selbst per REST-API an.
+  lakekeeper-bootstrap:
+    image: curlimages/curl:latest
+    container_name: capitol-lakekeeper-bootstrap
+    restart: "no"
+    command:
+      - -sS
+      - -X
+      - POST
+      - http://lakekeeper:8181/management/v1/bootstrap
+      - -H
+      - "Content-Type: application/json"
+      - --data
+      - '{"accept-terms-of-use": true}'
+    depends_on:
+      lakekeeper:
+        condition: service_healthy
+
+  # Compute-Layer: Trino mit Iceberg-Connector + file-based RLS
+  # Die RLS-Dateien (access-control.properties + rules.json) legen die
+  # Teilnehmenden in Phase 2 selbst unter ./trino/etc/ an und starten
+  # Trino mit "docker compose restart trino" neu.
+  trino:
+    image: trinodb/trino:476
+    container_name: capitol-trino
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./trino/etc:/etc/trino
+    healthcheck:
+      test: ["CMD", "curl", "-fI", "http://localhost:8080/v1/status"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+    depends_on:
+      lakekeeper:
+        condition: service_healthy
+      lakekeeper-bootstrap:
+        condition: service_completed_successfully
+      minio:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+
+  # BI-Layer: Metabase (Trino-Treiber ist im Core enthalten)
+  metabase:
+    image: metabase/metabase:latest
+    container_name: capitol-metabase-bi
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: h2
+    volumes:
+      - metabase_data:/metabase.db
+
+volumes:
+  minio_data:
+  lakekeeper_db_data:
+  metabase_data:
