@@ -1,10 +1,10 @@
 # Schulungsumgebung - Analytics Architekturen (Training)
 
 Schlanke Teilnehmenden-Umgebung. Enthaelt nur das, was zur Durchfuehrung der
-praktischen Uebungen noetig ist:
+praktischen Übungen noetig ist:
 
-- **Uebung 1 - Datenarchaeologie:** Seed-Daten + Python-Werkbank
-- **Uebung 6 - OSS-Lakehouse + RLS:** MinIO + Lakekeeper + Trino + Metabase
+- **Übung 1 - Datenarchaeologie:** Seed-Daten + Python-Werkbank
+- **Übung 6 - OSS-Lakehouse + RLS:** MinIO + Lakekeeper + Trino + Metabase
 
 ## Link zu Übungsaufgaben und Folien
 
@@ -15,19 +15,19 @@ https://drive.google.com/drive/folders/1Qbpg-Vdp_rx4eGGOhBh0VUGHr1xNQO5d?usp=sha
 ```
 analytics-architekturen-training/
 ├── docker-compose.yml
-├── seed-data/                 <- Rohdateien fuer die Uebungen
-├── python/                    <- Python-Werkbank (Uebung 1)
+├── seed-data/                 <- Rohdateien fuer die Übungen
+├── python/                    <- Python-Werkbank (Übung 1)
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── scripts/                   <- Ablage fuer eigene Skripte (-> /work im Container)
-└── trino/etc/                 <- Trino-Konfiguration (Uebung 6)
+└── trino/etc/                 <- Trino-Konfiguration (Übung 6)
     ├── config.properties
     ├── jvm.config
     ├── node.properties
     └── catalog/iceberg.properties
 ```
 
-## Uebung 1 - Python-Werkbank
+## Übung 1 - Python-Werkbank
 
 Statt Python lokal zu installieren, nutzen die Teilnehmenden den Container.
 Die Seed-Daten liegen im Container unter `/seed-data/`.
@@ -47,7 +47,7 @@ docker compose run --rm python python /work/parser.py
 In `/seed-data/` geschriebene Ausgaben landen automatisch wieder im lokalen
 `seed-data/`-Ordner.
 
-## Uebung 6 - OSS-Lakehouse
+## Übung 6 - OSS-Lakehouse
 
 ```bash
 # Kompletten Stack starten (Python-Werkbank bleibt im Profil "tools" aus)
@@ -68,7 +68,7 @@ docker compose ps -a
 
 Beim Start wird Lakekeeper automatisch gebootstrappt (Terms akzeptiert,
 Default-Projekt angelegt). Das **Warehouse `capitol`** legen die Teilnehmenden
-in Phase 1 der Uebung selbst per REST-API an.
+in Phase 1 der Übung selbst per REST-API an.
 
 Die RLS-Dateien `access-control.properties` und `rules.json` erstellen die
 Teilnehmenden in Phase 2 unter `trino/etc/` und laden sie mit
