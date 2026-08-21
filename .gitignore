@@ -1,0 +1,8 @@
+.DS_Store
+*.pdf
+*.html
+!folien/**/*.html.tpl
+dist/
+.venv/
+__pycache__/
+*.pyc
