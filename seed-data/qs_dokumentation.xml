@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QS-Dokumentation verfahren="HEP" jahr="2024">
+  <Fall id="F20240000001">
+    <Einrichtung ik="KH0006" bundesland="NW">Klinikum Rosenheim an der Aue</Einrichtung>
+    <Patient pseudonym="P20240000001" alter="51" geschlecht="w"/>
+    <OP datum="2024-08-31" art="elektiv" dauerMinuten="116" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000002">
+    <Einrichtung ik="KH0017" bundesland="BY">Klinikum Katzbach Marien</Einrichtung>
+    <Patient pseudonym="P20240000002" alter="76" geschlecht="w"/>
+    <OP datum="2024-12-25" art="elektiv" dauerMinuten="136" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000003">
+    <Einrichtung ik="KH0039" bundesland="NW">Klinikum Kranichfeld Barmherzige Brueder</Einrichtung>
+    <Patient pseudonym="P20240000003" alter="81" geschlecht="w"/>
+    <OP datum="2024-10-10" art="elektiv" dauerMinuten="133" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000004">
+    <Einrichtung ik="KH0023" bundesland="BY">Klinikum Sonnenberg Barmherzige Brueder</Einrichtung>
+    <Patient pseudonym="P20240000004" alter="74" geschlecht="w"/>
+    <OP datum="2024-06-12" art="notfall" dauerMinuten="117" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000005">
+    <Einrichtung ik="KH0004" bundesland="RP">Klinikum Moorbach West</Einrichtung>
+    <Patient pseudonym="P20240000005" alter="48" geschlecht="m"/>
+    <OP datum="2024-10-24" art="elektiv" dauerMinuten="160" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000006">
+    <Einrichtung ik="KH0044" bundesland="MV">Klinikum Waldkirch Nord</Einrichtung>
+    <Patient pseudonym="P20240000006" alter="62" geschlecht="w"/>
+    <OP datum="2024-07-20" art="elektiv" dauerMinuten="206" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000007">
+    <Einrichtung ik="KH0072" bundesland="BB">Klinikum Neustadt am Park</Einrichtung>
+    <Patient pseudonym="P20240000007" alter="69" geschlecht="m"/>
+    <OP datum="2024-04-03" art="elektiv" dauerMinuten="98" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000008">
+    <Einrichtung ik="KH0021" bundesland="NW">Klinikum Freihofen Elisabeth</Einrichtung>
+    <Patient pseudonym="P20240000008" alter="70" geschlecht="m"/>
+    <OP datum="2024-02-05" art="elektiv" dauerMinuten="75" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000009">
+    <Einrichtung ik="KH0053" bundesland="BE">Klinikum Auental im Tal</Einrichtung>
+    <Patient pseudonym="P20240000009" alter="74" geschlecht="m"/>
+    <OP datum="2024-02-29" art="elektiv" dauerMinuten="189" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000010">
+    <Einrichtung ik="KH0066" bundesland="BY">Klinikum Buchholz Nord</Einrichtung>
+    <Patient pseudonym="P20240000010" alter="73" geschlecht="m"/>
+    <OP datum="2024-12-16" art="elektiv" dauerMinuten="75" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>1</Luxation>
+      <Reoperation>1</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000011">
+    <Einrichtung ik="KH0016" bundesland="NW">Klinikum Steinfeld Ost</Einrichtung>
+    <Patient pseudonym="P20240000011" alter="54" geschlecht="w"/>
+    <OP datum="2024-04-02" art="elektiv" dauerMinuten="128" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000012">
+    <Einrichtung ik="KH0053" bundesland="BE">Klinikum Auental im Tal</Einrichtung>
+    <Patient pseudonym="P20240000012" alter="87" geschlecht="m"/>
+    <OP datum="2024-07-15" art="elektiv" dauerMinuten="103" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000013">
+    <Einrichtung ik="KH0063" bundesland="BY">Klinikum Moorbach Nord</Einrichtung>
+    <Patient pseudonym="P20240000013" alter="65" geschlecht="w"/>
+    <OP datum="2024-09-08" art="notfall" dauerMinuten="101" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000014">
+    <Einrichtung ik="KH0048" bundesland="RP">Klinikum Birkenau Mitte</Einrichtung>
+    <Patient pseudonym="P20240000014" alter="69" geschlecht="m"/>
+    <OP datum="2024-07-02" art="notfall" dauerMinuten="122" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000015">
+    <Einrichtung ik="KH0025" bundesland="RP">Klinikum Falkenberg Marien</Einrichtung>
+    <Patient pseudonym="P20240000015" alter="67" geschlecht="m"/>
+    <OP datum="2024-02-22" art="elektiv" dauerMinuten="79" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>1</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000016">
+    <Einrichtung ik="KH0026" bundesland="BW">Klinikum Buchholz Nord</Einrichtung>
+    <Patient pseudonym="P20240000016" alter="57" geschlecht="m"/>
+    <OP datum="2024-09-05" art="notfall" dauerMinuten="83" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000017">
+    <Einrichtung ik="KH0080" bundesland="SL">Klinikum Buchholz Sankt Josef</Einrichtung>
+    <Patient pseudonym="P20240000017" alter="57" geschlecht="m"/>
+    <OP datum="2024-03-04" art="elektiv" dauerMinuten="112" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000018">
+    <Einrichtung ik="KH0078" bundesland="BY">Klinikum Sonnenberg Hoehe</Einrichtung>
+    <Patient pseudonym="P20240000018" alter="69" geschlecht="m"/>
+    <OP datum="2024-04-17" art="elektiv" dauerMinuten="109" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000019">
+    <Einrichtung ik="KH0060" bundesland="BW">Klinikum Tannheim Barmherzige Brueder</Einrichtung>
+    <Patient pseudonym="P20240000019" alter="59" geschlecht="w"/>
+    <OP datum="2024-05-16" art="elektiv" dauerMinuten="84" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000020">
+    <Einrichtung ik="KH0060" bundesland="BW">Klinikum Tannheim Barmherzige Brueder</Einrichtung>
+    <Patient pseudonym="P20240000020" alter="79" geschlecht="w"/>
+    <OP datum="2024-12-27" art="notfall" dauerMinuten="103" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000021">
+    <Einrichtung ik="KH0078" bundesland="BY">Klinikum Sonnenberg Hoehe</Einrichtung>
+    <Patient pseudonym="P20240000021" alter="56" geschlecht="m"/>
+    <OP datum="2024-12-12" art="elektiv" dauerMinuten="98" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000022">
+    <Einrichtung ik="KH0029" bundesland="RP">Klinikum Bergheim an der Aue</Einrichtung>
+    <Patient pseudonym="P20240000022" alter="63" geschlecht="m"/>
+    <OP datum="2024-02-24" art="elektiv" dauerMinuten="139" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000023">
+    <Einrichtung ik="KH0057" bundesland="BY">Klinikum Lindau Nord</Einrichtung>
+    <Patient pseudonym="P20240000023" alter="65" geschlecht="m"/>
+    <OP datum="2024-10-07" art="elektiv" dauerMinuten="157" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000024">
+    <Einrichtung ik="KH0079" bundesland="BB">Klinikum Rosenheim Mitte</Einrichtung>
+    <Patient pseudonym="P20240000024" alter="68" geschlecht="m"/>
+    <OP datum="2024-11-08" art="elektiv" dauerMinuten="161" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000025">
+    <Einrichtung ik="KH0062" bundesland="NI">Klinikum Bergheim Elisabeth</Einrichtung>
+    <Patient pseudonym="P20240000025" alter="76" geschlecht="w"/>
+    <OP datum="2024-08-03" art="elektiv" dauerMinuten="119" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000026">
+    <Einrichtung ik="KH0069" bundesland="BY">Klinikum Lindau Sued</Einrichtung>
+    <Patient pseudonym="P20240000026" alter="76" geschlecht="w"/>
+    <OP datum="2024-05-26" art="elektiv" dauerMinuten="124" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000027">
+    <Einrichtung ik="KH0050" bundesland="NW">Klinikum Falkenberg Hoehe</Einrichtung>
+    <Patient pseudonym="P20240000027" alter="84" geschlecht="w"/>
+    <OP datum="2024-05-02" art="elektiv" dauerMinuten="144" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000028">
+    <Einrichtung ik="KH0072" bundesland="BB">Klinikum Neustadt am Park</Einrichtung>
+    <Patient pseudonym="P20240000028" alter="60" geschlecht="w"/>
+    <OP datum="2024-08-13" art="elektiv" dauerMinuten="86" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000029">
+    <Einrichtung ik="KH0072" bundesland="BB">Klinikum Neustadt am Park</Einrichtung>
+    <Patient pseudonym="P20240000029" alter="56" geschlecht="w"/>
+    <OP datum="2024-07-15" art="elektiv" dauerMinuten="94" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000030">
+    <Einrichtung ik="KH0072" bundesland="BB">Klinikum Neustadt am Park</Einrichtung>
+    <Patient pseudonym="P20240000030" alter="63" geschlecht="m"/>
+    <OP datum="2024-08-16" art="elektiv" dauerMinuten="114" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000031">
+    <Einrichtung ik="KH0072" bundesland="BB">Klinikum Neustadt am Park</Einrichtung>
+    <Patient pseudonym="P20240000031" alter="58" geschlecht="m"/>
+    <OP datum="2024-11-14" art="elektiv" dauerMinuten="144" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000032">
+    <Einrichtung ik="KH0027" bundesland="NW">Klinikum Rosenheim Elisabeth</Einrichtung>
+    <Patient pseudonym="P20240000032" alter="62" geschlecht="d"/>
+    <OP datum="2024-08-07" art="notfall" dauerMinuten="115" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000033">
+    <Einrichtung ik="KH0002" bundesland="MV">Klinikum Waldkirch Sued</Einrichtung>
+    <Patient pseudonym="P20240000033" alter="82" geschlecht="w"/>
+    <OP datum="2024-12-17" art="elektiv" dauerMinuten="102" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000034">
+    <Einrichtung ik="KH0071" bundesland="NW">Klinikum Nordheim an der Aue</Einrichtung>
+    <Patient pseudonym="P20240000034" alter="80" geschlecht="m"/>
+    <OP datum="2024-11-17" art="elektiv" dauerMinuten="145" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000035">
+    <Einrichtung ik="KH0047" bundesland="SN">Klinikum Buchholz Marien</Einrichtung>
+    <Patient pseudonym="P20240000035" alter="69" geschlecht="w"/>
+    <OP datum="2024-05-20" art="elektiv" dauerMinuten="111" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000036">
+    <Einrichtung ik="KH0079" bundesland="BB">Klinikum Rosenheim Mitte</Einrichtung>
+    <Patient pseudonym="P20240000036" alter="77" geschlecht="m"/>
+    <OP datum="2024-10-14" art="elektiv" dauerMinuten="139" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000037">
+    <Einrichtung ik="KH0053" bundesland="BE">Klinikum Auental im Tal</Einrichtung>
+    <Patient pseudonym="P20240000037" alter="75" geschlecht="m"/>
+    <OP datum="2024-10-16" art="elektiv" dauerMinuten="108" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000038">
+    <Einrichtung ik="KH0073" bundesland="BE">Klinikum Birkenau Sankt Josef</Einrichtung>
+    <Patient pseudonym="P20240000038" alter="57" geschlecht="w"/>
+    <OP datum="2024-03-13" art="elektiv" dauerMinuten="162" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000039">
+    <Einrichtung ik="KH0061" bundesland="BW">Klinikum Neustadt Sankt Josef</Einrichtung>
+    <Patient pseudonym="P20240000039" alter="63" geschlecht="m"/>
+    <OP datum="2024-04-24" art="elektiv" dauerMinuten="189" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000040">
+    <Einrichtung ik="KH0058" bundesland="NI">Klinikum Waldkirch Elisabeth</Einrichtung>
+    <Patient pseudonym="P20240000040" alter="77" geschlecht="w"/>
+    <OP datum="2024-11-24" art="elektiv" dauerMinuten="167" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000041">
+    <Einrichtung ik="KH0024" bundesland="BE">Klinikum Neustadt Ost</Einrichtung>
+    <Patient pseudonym="P20240000041" alter="54" geschlecht="m"/>
+    <OP datum="2024-03-16" art="elektiv" dauerMinuten="113" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000042">
+    <Einrichtung ik="KH0011" bundesland="BW">Klinikum Neustadt Sankt Josef</Einrichtung>
+    <Patient pseudonym="P20240000042" alter="61" geschlecht="w"/>
+    <OP datum="2024-02-05" art="elektiv" dauerMinuten="130" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000043">
+    <Einrichtung ik="KH0080" bundesland="SL">Klinikum Buchholz Sankt Josef</Einrichtung>
+    <Patient pseudonym="P20240000043" alter="65" geschlecht="w"/>
+    <OP datum="2024-07-27" art="notfall" dauerMinuten="121" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000044">
+    <Einrichtung ik="KH0026" bundesland="BW">Klinikum Buchholz Nord</Einrichtung>
+    <Patient pseudonym="P20240000044" alter="81" geschlecht="w"/>
+    <OP datum="2024-09-18" art="elektiv" dauerMinuten="151" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000045">
+    <Einrichtung ik="KH0011" bundesland="BW">Klinikum Neustadt Sankt Josef</Einrichtung>
+    <Patient pseudonym="P20240000045" alter="65" geschlecht="m"/>
+    <OP datum="2024-08-08" art="notfall" dauerMinuten="168" prothese="hybrid"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000046">
+    <Einrichtung ik="KH0049" bundesland="BY">Klinikum Steinfeld an der Aue</Einrichtung>
+    <Patient pseudonym="P20240000046" alter="54" geschlecht="w"/>
+    <OP datum="2024-12-09" art="elektiv" dauerMinuten="72" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000047">
+    <Einrichtung ik="KH0071" bundesland="NW">Klinikum Nordheim an der Aue</Einrichtung>
+    <Patient pseudonym="P20240000047" alter="75" geschlecht="m"/>
+    <OP datum="2024-06-30" art="elektiv" dauerMinuten="150" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000048">
+    <Einrichtung ik="KH0005" bundesland="NW">Klinikum Goldbach Elisabeth</Einrichtung>
+    <Patient pseudonym="P20240000048" alter="77" geschlecht="m"/>
+    <OP datum="2024-05-21" art="elektiv" dauerMinuten="67" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000049">
+    <Einrichtung ik="KH0016" bundesland="NW">Klinikum Steinfeld Ost</Einrichtung>
+    <Patient pseudonym="P20240000049" alter="71" geschlecht="m"/>
+    <OP datum="2024-06-10" art="elektiv" dauerMinuten="123" prothese="zementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+  <Fall id="F20240000050">
+    <Einrichtung ik="KH0065" bundesland="BW">Klinikum Lindau Hoehe</Einrichtung>
+    <Patient pseudonym="P20240000050" alter="63" geschlecht="w"/>
+    <OP datum="2024-03-01" art="elektiv" dauerMinuten="71" prothese="unzementiert"/>
+    <Indikatoren>
+      <Wundinfektion>0</Wundinfektion>
+      <Luxation>0</Luxation>
+      <Reoperation>0</Reoperation>
+    </Indikatoren>
+  </Fall>
+</QS-Dokumentation>

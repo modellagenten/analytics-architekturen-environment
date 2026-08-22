@@ -1,34 +1,70 @@
-name: capitol-analytics-architekturen-training
+name: qvig-analytics-architekturen-training
 
 services:
 
-  # ─── Python-Werkbank fuer Uebung 1 (Datenarchaeologie) ───────────
-  # Aufruf:  docker compose run --rm python <befehl>
-  python:
+  # ─── Analytische Werkbank: Python + dbt Core (DuckDB) ────────────────
+  # Aufruf:  docker compose run --rm workbench <befehl>
+  #   docker compose run --rm workbench python /work/load_raw.py
+  #   docker compose run --rm workbench dbt build
+  workbench:
     build:
       context: ./python
-    image: capitol-python
-    container_name: capitol-python
-    working_dir: /work
+    image: qvig-workbench
+    container_name: qvig-workbench
+    working_dir: /dbt_project
+    environment:
+      QVIG_DUCKDB: /warehouse/qvig.duckdb
+      QVIG_SEED: /seed-data
+      DBT_PROFILES_DIR: /dbt_project
+      MYSQL_HOST: mysql
+      MYSQL_USER: qvig
+      MYSQL_PASSWORD: qvig
     volumes:
       - ./seed-data:/seed-data
       - ./scripts:/work
+      - ./dbt_project:/dbt_project
+      - ./datengenerator:/datengenerator
+      - ./warehouse:/warehouse
     profiles:
       - tools
     restart: "no"
 
-  # ─── Uebung 6: OSS-Mini-Lakehouse ────────────────────────────────
+  # ─── Operatives Quellsystem / Serving-DB: MySQL 8 ────────────────────
+  # qvig_op   = operatives Quellsystem (Uebung 3, Zeilenspeicher)
+  # qvig_mart = Serving-Schicht fuer Metabase (Uebung 5)
+  mysql:
+    image: mysql:8.4
+    container_name: qvig-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: qvig_op
+      MYSQL_USER: qvig
+      MYSQL_PASSWORD: qvig
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uqvig", "-pqvig"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+
+  # ─── Uebung 6: OSS-Mini-Lakehouse ────────────────────────────────────
   # Storage-Layer: MinIO (S3-kompatibel)
   minio:
     image: quay.io/minio/minio:latest
-    container_name: capitol-minio-storage
+    container_name: qvig-minio-storage
     restart: unless-stopped
     ports:
       - "9000:9000"
       - "9001:9001"
     environment:
-      MINIO_ROOT_USER: capitol
-      MINIO_ROOT_PASSWORD: capitolcapitol
+      MINIO_ROOT_USER: qvig
+      MINIO_ROOT_PASSWORD: qvigqvig
     command: server /data --console-address ":9001"
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
@@ -42,7 +78,7 @@ services:
   # Warehouse-Bucket fuer das Iceberg-Lakehouse anlegen
   minio-init:
     image: quay.io/minio/mc:latest
-    container_name: capitol-minio-storage-init
+    container_name: qvig-minio-storage-init
     depends_on:
       minio:
         condition: service_healthy
@@ -50,15 +86,15 @@ services:
     command:
       - -c
       - |
-        mc alias set local http://minio:9000 capitol capitolcapitol
-        mc mb -p local/capitol-warehouse
-        echo "MinIO Bucket 'capitol-warehouse' bereit."
+        mc alias set local http://minio:9000 qvig qvigqvig
+        mc mb -p local/qvig-warehouse
+        echo "MinIO Bucket 'qvig-warehouse' bereit."
     restart: "no"
 
   # Catalog-Layer: Metadaten-Postgres fuer Lakekeeper
   lakekeeper-db:
     image: postgres:17
-    container_name: capitol-lakekeeper-db
+    container_name: qvig-lakekeeper-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: lakekeeper
@@ -76,11 +112,11 @@ services:
   # Catalog-Layer: Lakekeeper-Schema migrieren (einmalig)
   lakekeeper-migrate:
     image: quay.io/lakekeeper/catalog:latest-main
-    container_name: capitol-lakekeeper-migrate
+    container_name: qvig-lakekeeper-migrate
     restart: "no"
     command: ["migrate"]
     environment:
-      LAKEKEEPER__PG_ENCRYPTION_KEY: capitol-training-not-secret
+      LAKEKEEPER__PG_ENCRYPTION_KEY: qvig-training-not-secret
       LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
       LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
       RUST_LOG: info
@@ -91,11 +127,11 @@ services:
   # Catalog-Layer: Lakekeeper (Iceberg REST Catalog)
   lakekeeper:
     image: quay.io/lakekeeper/catalog:latest-main
-    container_name: capitol-lakekeeper
+    container_name: qvig-lakekeeper
     restart: unless-stopped
     command: ["serve"]
     environment:
-      LAKEKEEPER__PG_ENCRYPTION_KEY: capitol-training-not-secret
+      LAKEKEEPER__PG_ENCRYPTION_KEY: qvig-training-not-secret
       LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
       LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://lakekeeper:lakekeeper@lakekeeper-db:5432/lakekeeper
       LAKEKEEPER__ENABLE_DEFAULT_PROJECT: "true"
@@ -119,7 +155,7 @@ services:
   # Phase 1 der Uebung selbst per REST-API an.
   lakekeeper-bootstrap:
     image: curlimages/curl:latest
-    container_name: capitol-lakekeeper-bootstrap
+    container_name: qvig-lakekeeper-bootstrap
     restart: "no"
     command:
       - -sS
@@ -140,7 +176,7 @@ services:
   # Trino mit "docker compose restart trino" neu.
   trino:
     image: trinodb/trino:476
-    container_name: capitol-trino
+    container_name: qvig-trino
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -162,10 +198,10 @@ services:
       minio-init:
         condition: service_completed_successfully
 
-  # BI-Layer: Metabase (Trino-Treiber ist im Core enthalten)
+  # BI-Layer: Metabase (Treiber fuer MySQL und Trino im Core enthalten)
   metabase:
     image: metabase/metabase:latest
-    container_name: capitol-metabase-bi
+    container_name: qvig-metabase-bi
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -178,3 +214,4 @@ volumes:
   minio_data:
   lakekeeper_db_data:
   metabase_data:
+  mysql_data:

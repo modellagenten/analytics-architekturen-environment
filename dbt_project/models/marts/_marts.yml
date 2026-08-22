@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_einrichtung
+    description: "Dimension Einrichtung (Star-Schema)."
+    columns:
+      - name: einrichtung_sk
+        description: "Surrogatschluessel (Hash)."
+        data_tests:
+          - unique
+          - not_null
+      - name: einrichtung_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: fct_faelle
+    description: "Faktentabelle je QS-Fall."
+    columns:
+      - name: fall_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: einrichtung_sk
+        description: "FK auf dim_einrichtung."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_einrichtung')
+              field: einrichtung_sk
+
+  - name: rpt_qs_indikatoren
+    description: "Indikatorraten je Einrichtung (Reporting-Mart fuer BI/Portal)."
+    columns:
+      - name: einrichtung_id
+        data_tests:
+          - unique
+          - not_null
+      - name: fallzahl
+        data_tests:
+          - not_null

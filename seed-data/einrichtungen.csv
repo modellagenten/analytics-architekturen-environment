@@ -1,0 +1,81 @@
+einrichtung_id;name;traeger_typ;bundesland;bundesland_name;region;betten;lehrkrankenhaus;aktiv;gueltig_ab
+KH0001;Klinikum Weidenbach Nord;freigemeinnuetzig;SH;Schleswig-Holstein;Nord;392;0;1;2015-01-01
+KH0002;Klinikum Waldkirch Sued;freigemeinnuetzig;MV;Mecklenburg-Vorpommern;Ost;216;0;1;2015-01-01
+KH0003;Klinikum Neustadt West;freigemeinnuetzig;NW;Nordrhein-Westfalen;West;208;0;1;2015-01-01
+KH0004;Klinikum Moorbach West;oeffentlich;RP;Rheinland-Pfalz;West;415;0;1;2015-01-01
+KH0005;Klinikum Goldbach Elisabeth;oeffentlich;NW;Nordrhein-Westfalen;West;414;0;1;2015-01-01
+KH0006;Klinikum Rosenheim an der Aue;oeffentlich;NW;Nordrhein-Westfalen;West;947;0;1;2015-01-01
+KH0007;Klinikum Katzbach Hoehe;freigemeinnuetzig;NW;Nordrhein-Westfalen;West;1209;1;1;2015-01-01
+KH0008;Klinikum Tannheim Marien;oeffentlich;BE;Berlin;Ost;263;0;1;2015-01-01
+KH0009;Klinikum Buchholz Barmherzige Brueder;oeffentlich;BB;Brandenburg;Ost;273;0;1;2015-01-01
+KH0010;Klinikum Kranichfeld Sankt Josef;privat;BY;Bayern;Sued;338;0;1;2015-01-01
+KH0011;Klinikum Neustadt Sankt Josef;oeffentlich;BW;Baden-Wuerttemberg;Sued;1108;0;1;2015-01-01
+KH0012;Klinikum Buchholz Ost;freigemeinnuetzig;HH;Hamburg;Nord;409;0;1;2015-01-01
+KH0013;Klinikum Nordheim im Tal;oeffentlich;SH;Schleswig-Holstein;Nord;447;0;1;2015-01-01
+KH0014;Klinikum Birkenau an der Aue;oeffentlich;NW;Nordrhein-Westfalen;West;370;0;1;2015-01-01
+KH0015;Klinikum Nordheim am Park;oeffentlich;SN;Sachsen;Ost;579;0;1;2015-01-01
+KH0016;Klinikum Steinfeld Ost;oeffentlich;NW;Nordrhein-Westfalen;West;632;0;1;2015-01-01
+KH0017;Klinikum Katzbach Marien;oeffentlich;BY;Bayern;Sued;651;0;1;2015-01-01
+KH0018;Klinikum Sonnenberg Hoehe;oeffentlich;NW;Nordrhein-Westfalen;West;237;0;1;2015-01-01
+KH0019;Klinikum Ahlbeck Sankt Josef;oeffentlich;NW;Nordrhein-Westfalen;West;744;0;1;2015-01-01
+KH0020;Klinikum Kranichfeld im Tal;oeffentlich;BE;Berlin;Ost;625;0;1;2015-01-01
+KH0021;Klinikum Freihofen Elisabeth;oeffentlich;NW;Nordrhein-Westfalen;West;1006;0;1;2015-01-01
+KH0022;Klinikum Moorbach Ost;freigemeinnuetzig;BW;Baden-Wuerttemberg;Sued;1150;0;1;2015-01-01
+KH0023;Klinikum Sonnenberg Barmherzige Brueder;oeffentlich;BY;Bayern;Sued;1057;0;1;2015-01-01
+KH0024;Klinikum Neustadt Ost;oeffentlich;BE;Berlin;Ost;338;0;1;2015-01-01
+KH0025;Klinikum Falkenberg Marien;oeffentlich;RP;Rheinland-Pfalz;West;195;0;1;2015-01-01
+KH0026;Klinikum Buchholz Nord;oeffentlich;BW;Baden-Wuerttemberg;Sued;637;0;1;2015-01-01
+KH0027;Klinikum Rosenheim Elisabeth;freigemeinnuetzig;NW;Nordrhein-Westfalen;West;262;0;1;2015-01-01
+KH0028;Klinikum Freihofen Hoehe;privat;NW;Nordrhein-Westfalen;West;340;0;1;2015-01-01
+KH0029;Klinikum Bergheim an der Aue;privat;RP;Rheinland-Pfalz;West;1090;0;1;2015-01-01
+KH0030;Klinikum Freihofen Sankt Josef;oeffentlich;NI;Niedersachsen;Nord;1032;1;1;2015-01-01
+KH0031;Klinikum Buchholz Sued;oeffentlich;BY;Bayern;Sued;656;0;1;2015-01-01
+KH0032;Klinikum Nordheim Sankt Josef;oeffentlich;NW;Nordrhein-Westfalen;West;260;0;1;2015-01-01
+KH0033;Klinikum Birkenau Sued;freigemeinnuetzig;NW;Nordrhein-Westfalen;West;415;0;1;2015-01-01
+KH0034;Klinikum Reinhausen Marien;freigemeinnuetzig;HH;Hamburg;Nord;861;0;1;2015-01-01
+KH0035;Klinikum Weidenbach Sued;freigemeinnuetzig;BY;Bayern;Sued;468;0;1;2015-01-01
+KH0036;Klinikum Freihofen Sankt Josef;privat;NW;Nordrhein-Westfalen;West;290;0;1;2015-01-01
+KH0037;Klinikum Katzbach am Park;privat;NI;Niedersachsen;Nord;299;0;1;2015-01-01
+KH0038;Klinikum Moorbach Ost;oeffentlich;NW;Nordrhein-Westfalen;West;395;0;1;2015-01-01
+KH0039;Klinikum Kranichfeld Barmherzige Brueder;privat;NW;Nordrhein-Westfalen;West;622;0;1;2015-01-01
+KH0040;Klinikum Rosenheim Barmherzige Brueder;privat;NW;Nordrhein-Westfalen;West;341;0;1;2015-01-01
+KH0041;Klinikum Ellwangen West;privat;HE;Hessen;West;1037;1;1;2015-01-01
+KH0042;Klinikum Hohenwald an der Aue;freigemeinnuetzig;NI;Niedersachsen;Nord;798;0;1;2015-01-01
+KH0043;Klinikum Freihofen Elisabeth;freigemeinnuetzig;SN;Sachsen;Ost;356;0;1;2015-01-01
+KH0044;Klinikum Waldkirch Nord;freigemeinnuetzig;MV;Mecklenburg-Vorpommern;Ost;249;0;1;2015-01-01
+KH0045;Klinikum Ellwangen im Tal;privat;SN;Sachsen;Ost;606;0;1;2015-01-01
+KH0046;Klinikum Rosenheim Marien;oeffentlich;BY;Bayern;Sued;969;1;1;2015-01-01
+KH0047;Klinikum Buchholz Marien;freigemeinnuetzig;SN;Sachsen;Ost;684;0;1;2015-01-01
+KH0048;Klinikum Birkenau Mitte;oeffentlich;RP;Rheinland-Pfalz;West;782;0;1;2015-01-01
+KH0049;Klinikum Steinfeld an der Aue;oeffentlich;BY;Bayern;Sued;709;0;1;2015-01-01
+KH0050;Klinikum Falkenberg Hoehe;freigemeinnuetzig;NW;Nordrhein-Westfalen;West;633;0;1;2015-01-01
+KH0051;Klinikum Rosenheim im Tal;oeffentlich;NW;Nordrhein-Westfalen;West;406;0;1;2015-01-01
+KH0052;Klinikum Tannheim Mitte;oeffentlich;BY;Bayern;Sued;927;0;1;2015-01-01
+KH0053;Klinikum Auental im Tal;oeffentlich;BE;Berlin;Ost;904;1;1;2015-01-01
+KH0054;Klinikum Steinfeld Sued;privat;NW;Nordrhein-Westfalen;West;811;1;1;2015-01-01
+KH0055;Klinikum Bergheim West;freigemeinnuetzig;BY;Bayern;Sued;365;0;1;2015-01-01
+KH0056;Klinikum Steinfeld Nord;oeffentlich;HE;Hessen;West;519;0;1;2015-01-01
+KH0057;Klinikum Lindau Nord;oeffentlich;BY;Bayern;Sued;316;0;1;2015-01-01
+KH0058;Klinikum Waldkirch Elisabeth;oeffentlich;NI;Niedersachsen;Nord;173;0;1;2015-01-01
+KH0059;Klinikum Nordheim Ost;freigemeinnuetzig;NW;Nordrhein-Westfalen;West;928;1;1;2015-01-01
+KH0060;Klinikum Tannheim Barmherzige Brueder;privat;BW;Baden-Wuerttemberg;Sued;228;0;1;2015-01-01
+KH0061;Klinikum Neustadt Sankt Josef;oeffentlich;BW;Baden-Wuerttemberg;Sued;293;0;1;2015-01-01
+KH0062;Klinikum Bergheim Elisabeth;oeffentlich;NI;Niedersachsen;Nord;1093;0;1;2015-01-01
+KH0063;Klinikum Moorbach Nord;oeffentlich;BY;Bayern;Sued;1081;0;1;2015-01-01
+KH0064;Klinikum Buchholz Mitte;oeffentlich;MV;Mecklenburg-Vorpommern;Ost;766;0;1;2015-01-01
+KH0065;Klinikum Lindau Hoehe;oeffentlich;BW;Baden-Wuerttemberg;Sued;903;1;1;2015-01-01
+KH0066;Klinikum Buchholz Nord;freigemeinnuetzig;BY;Bayern;Sued;500;0;1;2015-01-01
+KH0067;Klinikum Rosenheim Barmherzige Brueder;oeffentlich;BY;Bayern;Sued;705;0;1;2015-01-01
+KH0068;Klinikum Birkenau Nord;oeffentlich;RP;Rheinland-Pfalz;West;1200;1;1;2015-01-01
+KH0069;Klinikum Lindau Sued;freigemeinnuetzig;BY;Bayern;Sued;462;0;1;2015-01-01
+KH0070;Klinikum Weidenbach an der Aue;privat;HE;Hessen;West;356;0;1;2015-01-01
+KH0071;Klinikum Nordheim an der Aue;oeffentlich;NW;Nordrhein-Westfalen;West;1083;1;1;2015-01-01
+KH0072;Klinikum Neustadt am Park;oeffentlich;BB;Brandenburg;Ost;1137;0;1;2015-01-01
+KH0073;Klinikum Birkenau Sankt Josef;privat;BE;Berlin;Ost;786;0;1;2015-01-01
+KH0074;Klinikum Birkenau an der Aue;freigemeinnuetzig;NI;Niedersachsen;Nord;626;0;1;2015-01-01
+KH0075;Klinikum Moorbach Sankt Josef;privat;BY;Bayern;Sued;741;0;1;2015-01-01
+KH0076;Klinikum Seeburg im Tal;privat;BW;Baden-Wuerttemberg;Sued;432;0;1;2015-01-01
+KH0077;Klinikum Moorbach Barmherzige Brueder;freigemeinnuetzig;BY;Bayern;Sued;718;0;1;2015-01-01
+KH0078;Klinikum Sonnenberg Hoehe;freigemeinnuetzig;BY;Bayern;Sued;1167;0;1;2015-01-01
+KH0079;Klinikum Rosenheim Mitte;freigemeinnuetzig;BB;Brandenburg;Ost;697;0;1;2015-01-01
+KH0080;Klinikum Buchholz Sankt Josef;oeffentlich;SL;Saarland;West;890;1;1;2015-01-01

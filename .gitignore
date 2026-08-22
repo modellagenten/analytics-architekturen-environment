@@ -6,3 +6,11 @@ dist/
 .venv/
 __pycache__/
 *.pyc
+
+# DuckDB-Warehouse (wird lokal aus den Seeds erzeugt)
+warehouse/*.duckdb
+warehouse/*.duckdb.wal
+# dbt-Artefakte
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/

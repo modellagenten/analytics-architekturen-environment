@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: hub_einrichtung
+    description: "Data-Vault-Hub Einrichtung (Insert-Only)."
+    columns:
+      - name: hk_einrichtung
+        data_tests: [unique, not_null]
+      - name: einrichtung_id
+        data_tests: [unique, not_null]
+
+  - name: hub_fall
+    description: "Data-Vault-Hub Fall (Insert-Only)."
+    columns:
+      - name: hk_fall
+        data_tests: [unique, not_null]
+      - name: fall_id
+        data_tests: [unique, not_null]
+
+  - name: lnk_fall_einrichtung
+    description: "Data-Vault-Link Fall <-> Einrichtung."
+    columns:
+      - name: hk_fall_einrichtung
+        data_tests: [unique, not_null]
+      - name: hk_fall
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('hub_fall')
+              field: hk_fall
+      - name: hk_einrichtung
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('hub_einrichtung')
+              field: hk_einrichtung
+
+  - name: sat_fall_details
+    description: "Data-Vault-Satellite mit beschreibenden Fall-Attributen."
+    columns:
+      - name: hk_fall
+        data_tests: [not_null]
+      - name: hashdiff
+        data_tests: [not_null]

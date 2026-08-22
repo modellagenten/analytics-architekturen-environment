@@ -1,82 +1,111 @@
-# Schulungsumgebung - Analytics Architekturen (Training)
+# Schulungsumgebung - Analytics-Architekturen (QVIG, lokal)
 
-Schlanke Teilnehmenden-Umgebung. Enthaelt nur das, was zur Durchfuehrung der
-praktischen Übungen noetig ist:
+Lokale Teilnehmenden-Umgebung fuer das 3-Tage-Training. Alles laeuft
+**on-premise in Docker** auf den Windows-VMs - keine Cloud-Accounts.
 
-- **Übung 1 - Datenarchaeologie:** Seed-Daten + Python-Werkbank
-- **Übung 6 - OSS-Lakehouse + RLS:** MinIO + Lakekeeper + Trino + Metabase
+Roter Faden: das fiktive **QVIG** ("Qualitaetsinstitut fuer Versorgung im
+Gesundheitswesen"), QS-Verfahren **Hueftendoprothetik**. Alle Daten sind
+synthetisch und reproduzierbar (Seed=42).
 
-## Link zu Übungsaufgaben und Folien
+## Der lokale Stack
 
-https://drive.google.com/drive/folders/1Qbpg-Vdp_rx4eGGOhBh0VUGHr1xNQO5d?usp=sharing
+| Komponente | Rolle | Uebung |
+|---|---|---|
+| **Datengenerator** (Python) | erzeugt synthetische QVIG-Rohdaten | Grundlage |
+| **MySQL 8** | operatives Quellsystem (`qvig_op`) + Serving-DB (`qvig_mart`) | 3, 5 |
+| **DuckDB + dbt Core** | analytische Engine (Spaltenspeicher), Transformation | 3, 4, 2b |
+| **MinIO + Lakekeeper + Trino** | OSS-Lakehouse (Iceberg) + Row-Level Security | 6 |
+| **Metabase** | Self-Service BI (spricht MySQL und Trino) | 5 |
+| **Python-Werkbank** | Loader, Data Science (scikit-learn) | 4, 7 |
 
 ## Verzeichnislayout
 
 ```
-analytics-architekturen-training/
+analytics-architekturen-environment/
 ├── docker-compose.yml
-├── seed-data/                 <- Rohdateien fuer die Übungen
-├── python/                    <- Python-Werkbank (Übung 1)
-│   ├── Dockerfile
-│   └── requirements.txt
-├── scripts/                   <- Ablage fuer eigene Skripte (-> /work im Container)
-└── trino/etc/                 <- Trino-Konfiguration (Übung 6)
-    ├── config.properties
-    ├── jvm.config
-    ├── node.properties
-    └── catalog/iceberg.properties
+├── datengenerator/
+│   └── generate.py            <- erzeugt seed-data/ (reproduzierbar)
+├── seed-data/                 <- generierte QVIG-Rohdaten (CSV/JSON/XML/Parquet)
+├── mysql/init/                <- legt qvig_op + qvig_mart an
+├── dbt_project/               <- dbt Core (Adapter duckdb)
+│   ├── dbt_project.yml, profiles.yml
+│   ├── macros/                <- hashkey/hashdiff (Data Vault)
+│   ├── models/staging|intermediate|marts|data_vault/
+│   └── snapshots/             <- SCD2-Beispiel
+├── scripts/                   <- Loader (-> /work im Container)
+│   ├── load_raw.py            <- Seeds -> DuckDB raw.*
+│   ├── load_mysql.py          <- Seeds -> MySQL qvig_op
+│   ├── publish_marts.py       <- DuckDB-Marts -> MySQL qvig_mart
+│   ├── load_lake.py           <- Seeds -> Iceberg Bronze (Lakehouse)
+│   └── ds_indikator.py        <- Data-Science-Mini (Uebung 7)
+├── warehouse/                 <- DuckDB-Datei (wird lokal erzeugt)
+└── trino/etc/                 <- Trino-Konfiguration (Iceberg + MySQL)
 ```
 
-## Übung 1 - Python-Werkbank
-
-Statt Python lokal zu installieren, nutzen die Teilnehmenden den Container.
-Die Seed-Daten liegen im Container unter `/seed-data/`.
+## Schnellstart
 
 ```bash
-cd schulungsumgebung/analytics-architekturen-training
-
-# Datei inspizieren
-docker compose run --rm python head -n 5 /seed-data/A_vertraege_legacy.dat
-docker compose run --rm python od -A x -t x1z -v /seed-data/A_vertraege_legacy.dat | head -25
-docker compose run --rm python awk '{ print length }' /seed-data/A_vertraege_legacy.dat | sort -u
-
-# Eigenen Parser ausfuehren (Skript nach ./scripts legen -> /work)
-docker compose run --rm python python /work/parser.py
-```
-
-In `/seed-data/` geschriebene Ausgaben landen automatisch wieder im lokalen
-`seed-data/`-Ordner.
-
-## Übung 6 - OSS-Lakehouse
-
-```bash
-# Kompletten Stack starten (Python-Werkbank bleibt im Profil "tools" aus)
+# 1) Stack starten (ohne Werkbank; die laeuft on demand im Profil "tools")
 docker compose up -d
 
-# Status pruefen (alles healthy? minio-init + lakekeeper-bootstrap auf "Exited (0)")
-docker compose ps -a
+# 2) Werkbank-Image bauen (beim ersten Mal, ~3-5 Min.)
+docker compose build workbench
+
+# 3) Rohdaten erzeugen (optional - die Seeds sind bereits im Repo enthalten)
+docker compose run --rm workbench python /datengenerator/generate.py
+
+# 4) Rohschicht in DuckDB laden und dbt bauen
+docker compose run --rm workbench python /work/load_raw.py
+docker compose run --rm workbench dbt build
 ```
 
-**Endpoints:**
+`dbt build` legt in `warehouse/qvig.duckdb` die Schichten
+`raw -> staging -> intermediate -> marts` an (plus Data Vault und Snapshot).
 
-| Dienst         | URL                     | Zugang                  |
-|----------------|-------------------------|-------------------------|
-| MinIO Console  | http://localhost:9001   | `capitol` / `capitolcapitol` |
-| Lakekeeper UI  | http://localhost:8181   | -                       |
-| Trino UI       | http://localhost:8080   | User: `admin`           |
-| Metabase       | http://localhost:3000   | -                       |
+### Endpoints
 
-Beim Start wird Lakekeeper automatisch gebootstrappt (Terms akzeptiert,
-Default-Projekt angelegt). Das **Warehouse `capitol`** legen die Teilnehmenden
-in Phase 1 der Übung selbst per REST-API an.
+| Dienst | URL | Zugang |
+|---|---|---|
+| MinIO Console | http://localhost:9001 | `qvig` / `qvigqvig` |
+| Lakekeeper UI | http://localhost:8181 | - |
+| Trino UI | http://localhost:8080 | User: `admin` |
+| Metabase | http://localhost:3000 | (bei Erststart einrichten) |
+| MySQL | localhost:3306 | `qvig` / `qvig` (DBs `qvig_op`, `qvig_mart`) |
 
-Die RLS-Dateien `access-control.properties` und `rules.json` erstellen die
-Teilnehmenden in Phase 2 unter `trino/etc/` und laden sie mit
-`docker compose restart trino` neu.
+## Uebungsbezug
+
+| Uebung | Was passiert |
+|---|---|
+| **3 - Staging & Column Store** | `load_mysql.py` fuellt MySQL (Zeilenspeicher); dieselben Daten in DuckDB (Spaltenspeicher) - Query-Vergleich |
+| **4 - ELT mit dbt Core** | `load_raw.py` + `dbt build`: Staging-Modelle mit Tests, Lineage, Docs |
+| **2b - Data Vault** | Modelle unter `models/data_vault/` (Hubs/Link/Satellite, Insert-Only) |
+| **5 - Metabase** | `publish_marts.py` schiebt Marts nach `qvig_mart`; Metabase -> MySQL |
+| **6 - Lakehouse + RLS** | `load_lake.py` -> Iceberg Bronze; Silver/Gold + RLS in Trino |
+| **7 - Data Science** | `ds_indikator.py`: reproduzierbarer Indikator + einfaches Modell |
+
+## dbt-Kommandos (Cheatsheet)
+
+```bash
+docker compose run --rm workbench dbt build          # alles bauen + testen
+docker compose run --rm workbench dbt run             # nur Modelle
+docker compose run --rm workbench dbt test            # nur Tests
+docker compose run --rm workbench dbt snapshot        # SCD2-Snapshot
+docker compose run --rm workbench dbt docs generate   # Doku/Lineage
+```
 
 ## Reset zwischen Schulungstagen
 
 ```bash
 docker compose down -v
-docker compose up -d minio minio-init lakekeeper trino metabase
+rm -f warehouse/qvig.duckdb
+docker compose up -d
+```
+
+## Datengenerator (optional neu erzeugen)
+
+```bash
+# Standard: 80 Einrichtungen, 50.000 Faelle (Seed=42, reproduzierbar)
+docker compose run --rm workbench python /datengenerator/generate.py
+# kleinerer Datensatz:
+docker compose run --rm workbench python /datengenerator/generate.py --faelle 5000
 ```

@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      QVIG-Rohschicht. Wird durch scripts/load_raw.py aus den Seed-Dateien
+      geladen (CSV/JSON). Alle CSV-Spalten liegen bewusst als Text vor - das
+      Casting und die Bereinigung passieren im Staging.
+    schema: raw
+    tables:
+      - name: einrichtungen
+        description: "Krankenhaus-Stammdaten (operatives Quellsystem)."
+      - name: faelle
+        description: "QS-Dokumentation je Fall (Hueftendoprothetik), roh."
+      - name: sozialdaten
+        description: "Follow-up der Krankenkassen (Granularitaet: Pseudonym)."
+      - name: patientenbefragung
+        description: "Patientenbefragung als JSON-Dokument (verschachtelt)."
+        loaded_at_field: _loaded_at

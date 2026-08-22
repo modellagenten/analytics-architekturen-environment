@@ -1,0 +1,10 @@
+# dbt-Core-Profil fuer das QVIG-Training (DuckDB, lokal).
+# Der Pfad zur DuckDB-Datei kommt aus der Umgebungsvariable QVIG_DUCKDB
+# (im Docker-Container /warehouse/qvig.duckdb).
+qvig:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('QVIG_DUCKDB', '/warehouse/qvig.duckdb') }}"
+      threads: 4

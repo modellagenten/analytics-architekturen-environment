@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: stg_einrichtungen
+    description: "Gereinigte Krankenhaus-Stammdaten."
+    columns:
+      - name: einrichtung_id
+        description: "Fachlicher Schluessel der Einrichtung (Business Key)."
+        data_tests:
+          - unique
+          - not_null
+      - name: bundesland
+        data_tests:
+          - not_null
+
+  - name: stg_faelle
+    description: "Gereinigte QS-Dokumentation je Fall."
+    columns:
+      - name: fall_id
+        description: "Eindeutiger Fallschluessel."
+        data_tests:
+          - unique
+          - not_null
+      - name: einrichtung_id
+        description: "Referenz auf die Einrichtung."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_einrichtungen')
+              field: einrichtung_id
+      - name: geschlecht
+        data_tests:
+          - accepted_values:
+              values: ['m', 'w', 'd']
+      - name: asa_klasse
+        data_tests:
+          - accepted_values:
+              values: [1, 2, 3, 4]
+      - name: eingriff_art
+        data_tests:
+          - accepted_values:
+              values: ['elektiv', 'notfall']
+
+  - name: stg_sozialdaten
+    description: "Kassen-Follow-up je Patient (Pseudonym)."
+    columns:
+      - name: patient_pseudonym
+        data_tests:
+          - not_null
+
+  - name: stg_befragung
+    description: "Aufgeflachte Patientenbefragung."
+    columns:
+      - name: fall_id
+        data_tests:
+          - not_null
+      - name: zufriedenheit_gesamt
+        data_tests:
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
