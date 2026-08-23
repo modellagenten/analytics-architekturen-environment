@@ -170,10 +170,8 @@ services:
       lakekeeper:
         condition: service_healthy
 
-  # Compute-Layer: Trino mit Iceberg-Connector + file-based RLS
-  # Die RLS-Dateien (access-control.properties + rules.json) legen die
-  # Teilnehmenden in Phase 2 selbst unter ./trino/etc/ an und starten
-  # Trino mit "docker compose restart trino" neu.
+  # Compute-Layer: Trino mit Iceberg-Connector
+  # SQL schreiben die Teilnehmenden in DBeaver (Host localhost, Port 8080).
   trino:
     image: trinodb/trino:476
     container_name: qvig-trino

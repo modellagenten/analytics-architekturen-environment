@@ -2,8 +2,7 @@
 """Laedt QVIG-Rohdaten als Bronze-Tabellen ins Iceberg-Lakehouse (Uebung 6).
 
 Storage: MinIO (S3-kompatibel), Catalog: Lakekeeper (Iceberg REST),
-Query-Engine: Trino. Die Teilnehmenden bauen darauf Silver/Gold und
-Row-Level Security auf.
+Query-Engine: Trino. Die Teilnehmenden bauen darauf Silver/Gold in DBeaver.
 
 Vorbedingung: Warehouse 'qvig' wurde in Phase 1 der Uebung per REST-API
 angelegt (siehe uebungen/06-oss-lakehouse-rls.md).

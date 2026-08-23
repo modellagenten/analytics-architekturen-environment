@@ -14,8 +14,8 @@ synthetisch und reproduzierbar (Seed=42).
 | **Datengenerator** (Python) | erzeugt synthetische QVIG-Rohdaten | Grundlage |
 | **MySQL 8** | operatives Quellsystem (`qvig_op`) + Serving-DB (`qvig_mart`) | 3, 5 |
 | **DuckDB + dbt Core** | analytische Engine (Spaltenspeicher), Transformation | 3, 4, 2b |
-| **MinIO + Lakekeeper + Trino** | OSS-Lakehouse (Iceberg) + Row-Level Security | 6 |
-| **Metabase** | Self-Service BI (spricht MySQL und Trino) | 5 |
+| **MinIO + Lakekeeper + Trino** | OSS-Lakehouse (Iceberg): Storage, Catalog, Compute | 6 |
+| **Metabase** | Self-Service BI (MySQL `qvig_mart`) | 5 |
 | **Python-Werkbank** | Loader, Data Science (scikit-learn) | 4, 7 |
 
 ## Verzeichnislayout
@@ -80,7 +80,7 @@ docker compose run --rm workbench dbt build
 | **4 - ELT mit dbt Core** | `load_raw.py` + `dbt build`: Staging-Modelle mit Tests, Lineage, Docs |
 | **2b - Data Vault** | Modelle unter `models/data_vault/` (Hubs/Link/Satellite, Insert-Only) |
 | **5 - Metabase** | `publish_marts.py` schiebt Marts nach `qvig_mart`; Metabase -> MySQL |
-| **6 - Lakehouse + RLS** | `load_lake.py` -> Iceberg Bronze; Silver/Gold + RLS in Trino |
+| **6 - Lakehouse** | `load_lake.py` -> Iceberg Bronze; Silver/Gold in Trino (DBeaver) |
 | **7 - Data Science** | `ds_indikator.py`: reproduzierbarer Indikator + einfaches Modell |
 
 ## dbt-Kommandos (Cheatsheet)
