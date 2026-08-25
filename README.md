@@ -17,6 +17,7 @@ synthetisch und reproduzierbar (Seed=42).
 | **MinIO + Lakekeeper + Trino** | OSS-Lakehouse (Iceberg): Storage, Catalog, Compute | 6 |
 | **Metabase** | Self-Service BI (MySQL `qvig_mart`) | 5 |
 | **Python-Werkbank** | Loader, Data Science (scikit-learn) | 4, 7 |
+| **Apache Airflow 3** | Orchestrierung der dbt-Pipeline (getrennte DAGs pro Schicht) | 4 |
 
 ## Verzeichnislayout
 
@@ -39,7 +40,11 @@ analytics-architekturen-environment/
 │   ├── load_lake.py           <- Seeds -> Iceberg Bronze (Lakehouse)
 │   └── ds_indikator.py        <- Data-Science-Mini (Uebung 7)
 ├── warehouse/                 <- DuckDB-Datei (wird lokal erzeugt)
-└── trino/etc/                 <- Trino-Konfiguration (Iceberg + MySQL)
+├── trino/etc/                 <- Trino-Konfiguration (Iceberg + MySQL)
+└── airflow/                   <- Orchestrierung (Profil "airflow")
+    ├── Dockerfile             <- Airflow 3.3.1 + dbt-venv
+    ├── requirements.txt       <- dbt-duckdb & Loader-Pakete (eigenes venv)
+    └── dags/                  <- qvig_00_raw -> _10_staging -> _20_intermediate -> _30_marts
 ```
 
 ## Schnellstart
@@ -71,6 +76,7 @@ docker compose run --rm workbench dbt build
 | Trino UI | http://localhost:8080 | User: `admin` |
 | Metabase | http://localhost:3000 | (bei Erststart einrichten) |
 | MySQL | localhost:3306 | `qvig` / `qvig` (DBs `qvig_op`, `qvig_mart`) |
+| Airflow UI | http://localhost:8081 | kein Login (nur bei `--profile airflow`) |
 
 ## Uebungsbezug
 
@@ -93,10 +99,51 @@ docker compose run --rm workbench dbt snapshot        # SCD2-Snapshot
 docker compose run --rm workbench dbt docs generate   # Doku/Lineage
 ```
 
+## Orchestrierung mit Airflow (optional, Uebung 4)
+
+Statt `dbt build` manuell aufzurufen, orchestriert **Apache Airflow 3.3.1** die
+Pipeline schichtweise. Jede dbt-Schicht ist eine eigene DAG; die DAGs haengen
+ueber **Airflow-3-Assets** (data-aware scheduling) zusammen:
+
+```
+qvig_00_raw  --[qvig_raw]-->  qvig_10_staging  --[qvig_staging]-->
+qvig_20_intermediate  --[qvig_intermediate]-->  qvig_30_marts
+```
+
+Sobald ein Test-Task einer Schicht erfolgreich ist, meldet er sein Asset als
+aktualisiert - und die naechste DAG startet automatisch.
+
+```bash
+# 1) Airflow-Stack zusaetzlich starten (baut beim ersten Mal das Image)
+docker compose --profile airflow up -d --build
+
+# 2) UI oeffnen: http://localhost:8081  (kein Login noetig)
+
+# 3) Die vier DAGs (qvig_*) einschalten (Toggle) und qvig_00_raw manuell
+#    triggern. Die restliche Kette laeuft ueber die Assets von selbst.
+```
+
+Alternativ per CLI:
+
+```bash
+docker compose exec airflow-scheduler airflow dags trigger qvig_00_raw
+```
+
+> **Wichtig - DuckDB ist Single-Writer:** Solange eine DAG laeuft, darf **nicht**
+> parallel `docker compose run --rm workbench dbt ...` ausgefuehrt werden -
+> beide wuerden gleichzeitig in `warehouse/qvig.duckdb` schreiben und sich mit
+> einem Lock-Fehler blockieren. Airflow serialisiert die Schreibzugriffe ueber
+> den Pool `duckdb_write` (1 Slot); der manuelle Aufruf umgeht diesen Schutz.
+
+> **Ressourcen:** Der Airflow-Stack startet fuenf zusaetzliche Container. Wer
+> die Uebung isoliert fahren will, kann Trino und Metabase vorher stoppen:
+> `docker compose stop trino metabase`.
+
 ## Reset zwischen Schulungstagen
 
 ```bash
-docker compose down -v
+# --profile airflow nur ergaenzen, wenn Airflow gestartet wurde
+docker compose --profile airflow down -v
 rm -f warehouse/qvig.duckdb
 docker compose up -d
 ```

@@ -1,0 +1,9 @@
+# dbt-Werkzeug fuer die Airflow-DAGs (eigenes venv, getrennt von Airflow selbst).
+# Spiegelt die relevanten Pakete der Werkbank (python/requirements.txt) wider -
+# ohne Data-Science- und Lakehouse-Pakete, die die Orchestrierung nicht braucht.
+dbt-duckdb>=1.9,<2
+duckdb>=1.1,<2
+pandas>=2.2
+pyarrow>=17
+sqlalchemy>=2.0
+pymysql>=1.1

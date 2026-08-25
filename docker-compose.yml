@@ -1,5 +1,39 @@
 name: qvig-analytics-architekturen-training
 
+# ─── Gemeinsame Airflow-Konfiguration (Profil "airflow") ──────────────────
+# Wird von allen Airflow-Services per YAML-Anker geteilt. Airflow orchestriert
+# die dbt-Pipeline schichtweise (raw -> staging -> intermediate -> marts) ueber
+# Airflow-3-Assets. dbt laeuft in einem eigenen venv im Image (siehe airflow/).
+x-qvig-airflow-common: &qvig-airflow-common
+  build:
+    context: ./airflow
+  image: qvig-airflow
+  environment: &qvig-airflow-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-apiserver:8080/execution/
+    AIRFLOW__API_AUTH__JWT_SECRET: qvig-training-not-secret
+    # Schulungsmodus: kein Login-Aufwand - jeder Zugriff ist Admin.
+    AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_ALL_ADMINS: "true"
+    # Von dbt/den Loadern benoetigte Umgebung (analog zur Werkbank):
+    QVIG_DUCKDB: /warehouse/qvig.duckdb
+    QVIG_SEED: /seed-data
+    DBT_PROFILES_DIR: /dbt_project
+    MYSQL_HOST: mysql
+    MYSQL_USER: qvig
+    MYSQL_PASSWORD: qvig
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/config:/opt/airflow/config
+    - ./dbt_project:/dbt_project
+    - ./warehouse:/warehouse
+    - ./scripts:/work
+    - ./seed-data:/seed-data
+  user: "${AIRFLOW_UID:-50000}:0"
+
 services:
 
   # ─── Analytische Werkbank: Python + dbt Core (DuckDB) ────────────────
@@ -208,8 +242,129 @@ services:
     volumes:
       - metabase_data:/metabase.db
 
+  # ─── Orchestrierung: Apache Airflow 3.3.1 (Profil "airflow") ──────────
+  # Start:  docker compose --profile airflow up -d
+  # UI:     http://localhost:8081   (kein Login - SimpleAuthManager, all admins)
+  #
+  # Vier DAGs bilden die dbt-Pipeline ab und haengen ueber Assets zusammen:
+  #   qvig_00_raw -> qvig_10_staging -> qvig_20_intermediate -> qvig_30_marts
+
+  # Metadaten-Datenbank fuer Airflow (getrennt von der Lakekeeper-DB)
+  airflow-db:
+    image: postgres:17
+    container_name: qvig-airflow-db
+    restart: unless-stopped
+    profiles:
+      - airflow
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - airflow_db_data:/var/lib/postgresql/data
+
+  # Einmalige Initialisierung: Schema migrieren + DuckDB-Schreib-Pool anlegen
+  airflow-init:
+    <<: *qvig-airflow-common
+    container_name: qvig-airflow-init
+    profiles:
+      - airflow
+    user: "0:0"
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        mkdir -p /opt/airflow/logs /opt/airflow/config
+        chown -R "${AIRFLOW_UID:-50000}:0" /opt/airflow/logs /opt/airflow/config
+        /entrypoint airflow db migrate
+        /entrypoint airflow pools set duckdb_write 1 "Serialisiert DuckDB-Schreibzugriffe (Single-Writer)"
+    environment:
+      <<: *qvig-airflow-env
+      _AIRFLOW_DB_MIGRATE: "true"
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+    restart: "no"
+
+  # Web-UI + REST-API (Trino belegt bereits 8080 -> Airflow auf 8081)
+  airflow-apiserver:
+    <<: *qvig-airflow-common
+    container_name: qvig-airflow-apiserver
+    profiles:
+      - airflow
+    command: api-server
+    ports:
+      - "8081:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/api/v2/monitor/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+
+  # Scheduler: reagiert auf Asset-Events und plant die DAG-Laeufe
+  airflow-scheduler:
+    <<: *qvig-airflow-common
+    container_name: qvig-airflow-scheduler
+    profiles:
+      - airflow
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+
+  # DAG-Processor: parst die DAG-Dateien (eigener Prozess seit Airflow 3)
+  airflow-dag-processor:
+    <<: *qvig-airflow-common
+    container_name: qvig-airflow-dag-processor
+    profiles:
+      - airflow
+    command: dag-processor
+    restart: unless-stopped
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+
+  # Triggerer: fuer deferrable Operators / Sensoren
+  airflow-triggerer:
+    <<: *qvig-airflow-common
+    container_name: qvig-airflow-triggerer
+    profiles:
+      - airflow
+    command: triggerer
+    restart: unless-stopped
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+
 volumes:
   minio_data:
   lakekeeper_db_data:
   metabase_data:
   mysql_data:
+  airflow_db_data:

@@ -21,17 +21,22 @@ clean-targets:
 #   intermediate -> Views: fachliche Anreicherung / Joins
 #   marts        -> Tabellen: Star-Schema + Reporting-Marts (Column Store)
 #   data_vault   -> Tabellen: Raw Vault (Uebung 2b, Insert-Only)
+#   +tags erlauben die schichtweise Selektion in Airflow (--select tag:staging).
 models:
   qvig:
     staging:
       +materialized: view
       +schema: staging
+      +tags: ["staging"]
     intermediate:
       +materialized: view
       +schema: intermediate
+      +tags: ["intermediate"]
     marts:
       +materialized: table
       +schema: marts
+      +tags: ["marts"]
     data_vault:
       +materialized: table
       +schema: raw_vault
+      +tags: ["data_vault"]
